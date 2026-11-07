@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 核心考點速記・高頻精選 100</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--ink:#1c2530;--sub:#5b6773;--line:#dde3e9;--ac:#0e7490;--acbg:#e0f2f7;--warn:#b45309;--warnbg:#fff4e0;--ok:#15803d;--okbg:#e3f6e8;--th:#eef2f5}
+@media (prefers-color-scheme:dark){:root{--bg:#12181e;--card:#1b232b;--ink:#e8edf2;--sub:#9aa7b3;--line:#2d3944;--ac:#5cc4de;--acbg:#173943;--warn:#f5b45a;--warnbg:#3a2c14;--ok:#6fd48c;--okbg:#17321f;--th:#232e38}}
+*{box-sizing:border-box}
+html{scroll-padding-top:150px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+header.top{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:10px 14px}
+.bar{max-width:1680px;margin:auto;display:flex;flex-direction:column;gap:8px}
+h1{margin:0;font-size:1.1rem}
+#q{width:100%;font:inherit;padding:10px 14px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+#q:focus{outline:none;border-color:var(--ac)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+button{font:inherit;font-size:.9rem;cursor:pointer;border:0;background:var(--card);color:var(--ink);padding:5px 12px}
+.seg button+button{border-left:1px solid var(--line)}
+button.on{background:var(--ac);color:var(--card)}
+.chip{border:1px solid var(--line);border-radius:99px}
+#cnt{margin-left:auto;color:var(--sub);font-size:.88rem}
+main{max-width:1680px;margin:auto;padding:14px}
+h2{margin:22px 0 10px;font-size:1.2rem;border-left:5px solid var(--ac);padding-left:10px}
+h2 small{color:var(--sub);font-weight:400;font-size:.85rem;margin-left:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,500px),1fr));gap:14px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card header{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.ck{display:flex;gap:10px;align-items:flex-start;font-weight:700;font-size:1.05rem;cursor:pointer}
+.ck input{width:20px;height:20px;margin-top:5px;flex:none;accent-color:var(--ac)}
+.badge{flex:none;font-size:.75rem;background:var(--okbg);color:var(--ok);border-radius:6px;padding:1px 8px;margin-top:4px}
+.tags{margin:4px 0 8px 30px;display:flex;gap:6px;flex-wrap:wrap}
+.tags span{font-size:.78rem;background:var(--acbg);color:var(--ac);border-radius:6px;padding:0 8px}
+.s{margin:4px 0 10px;color:var(--sub)}
+.tw{overflow-x:auto;margin:8px 0}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--th);white-space:nowrap}
+svg{display:block;width:100%;height:auto;max-width:560px;margin:8px auto}
+svg text{fill:var(--ink);font-size:13px;font-family:inherit}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0}
+.flow b{background:var(--acbg);color:var(--ac);border:1px solid var(--ac);border-radius:8px;padding:4px 12px;font-weight:600}
+.flow i{font-style:normal;color:var(--sub)}
+.fl{font-size:.85rem;color:var(--sub);margin:8px 0 0}
+.conf{margin-top:12px;background:var(--warnbg);border-radius:10px;padding:8px 14px}
+.conf h4{margin:0;color:var(--warn);font-size:.95rem}
+.conf ul{margin:4px 0 2px;padding-left:20px;font-size:.93rem}
+.empty{text-align:center;color:var(--sub);padding:40px}
+@media(max-width:600px){main{padding:10px}.card{padding:12px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="bar">
+<h1>AI 核心考點速記・高頻精選 100 <span style="font-weight:400;color:var(--sub);font-size:.85rem"></span></h1>
+<input id="q" type="search" placeholder="搜尋考點、關鍵字（例：過擬合、GAN、歐盟）" aria-label="搜尋">
+<div class="row">
+<span id="cnt"></span>
+</div></div></header>
+<main id="main"></main>
+
+<script>
+const LES={L111:"人工智慧概念與治理",L112:"資料處理與分析概念",L113:"機器學習與模型",L114:"鑑別式 AI 與生成式 AI"};
+const tb=(h,r)=>'<div class="tw"><table><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+r.map(a=>'<tr>'+a.map(x=>'<td>'+x+'</td>').join('')+'</tr>').join('')+'</table></div>';
+const flow=a=>'<div class="flow">'+a.map(x=>'<b>'+x+'</b>').join('<i>➜</i>')+'</div>';
+
+const RICH=[
+{l:"L111",cat:"AI 基礎分級",t:"弱 AI、強 AI、超 AI 三階段",ex:1,
+s:"依「能不能跨到沒訓練過的任務」分三級，目前商業應用全屬弱 AI。",
+b:tb(["類型","別名","能力","現況"],[["弱 AI","Narrow AI / ANI","專精單一任務、無自我意識","已普及（商業應用皆此類）"],["強 AI","AGI / General AI","具人類等級通用心智，可跨領域學習","尚未實現"],["超 AI","ASI / Super AI","全面超越人類智慧","僅存於科幻概念"]]),
+c:["ChatGPT 等生成式 AI 雖然很強，仍屬<b>弱 AI</b>，不是 AGI。","判準是「單一系統能否跨到沒訓練過的任務」，與產品數量、功能多寡無關。","「生成式 AI」是應用分類，「弱／強／超」是能力範疇分類，兩者不同軸。"]},
+
+{l:"L111",cat:"AI 基礎分級",t:"圖靈測試（Turing Test）",ex:1,
+s:"1950 年圖靈提出，別名模仿遊戲：評估機器的外顯行為，是否與人類無法區分。",
+b:`<svg viewBox="0 0 460 130" role="img" aria-label="圖靈測試示意圖"><rect x="10" y="45" width="90" height="40" rx="8" fill="var(--acbg)" stroke="var(--ac)"/><text x="55" y="70" text-anchor="middle">評審（提問）</text><rect x="300" y="12" width="90" height="36" rx="8" fill="var(--th)" stroke="var(--line)"/><text x="345" y="35" text-anchor="middle">人類</text><rect x="300" y="82" width="90" height="36" rx="8" fill="var(--th)" stroke="var(--line)"/><text x="345" y="105" text-anchor="middle">機器</text><path d="M100 58L300 30M100 72L300 100" stroke="var(--sub)" stroke-dasharray="4 3" fill="none"/><text x="200" y="22" text-anchor="middle">只透過文字對話</text><text x="410" y="70" text-anchor="start" font-size="12">分不出誰是機器</text><text x="410" y="88" font-size="12">＝通過</text></svg>`,
+c:["只問「分不分得出來」，<b>不問對不對</b>、也不問為什麼。","不評估機器內部是否有意識或真正理解。","1950 圖靈測試（目標）與 1956 達特茅斯會議（AI 命名）是不同年份、不同事件。"]},
+
+{l:"L111",cat:"治理與法規",t:"歐盟 AI 法案：四級風險金字塔",ex:1,
+s:"以風險分級為核心，風險越高、管制越嚴。",
+b:`<svg viewBox="0 0 560 195" role="img" aria-label="歐盟 AI 法案四級風險金字塔"><polygon points="130,6 101,50 159,50" fill="#dc2626"/><polygon points="101,50 159,50 189,96 71,96" fill="#ea580c"/><polygon points="71,96 189,96 220,142 40,142" fill="#eab308"/><polygon points="40,142 220,142 250,188 10,188" fill="#16a34a"/><text x="275" y="33"><tspan font-weight="700">不可接受</tspan>：完全禁止</text><text x="275" y="79"><tspan font-weight="700">高風險</tspan>：嚴格監管</text><text x="275" y="125"><tspan font-weight="700">有限風險</tspan>：透明義務</text><text x="275" y="171"><tspan font-weight="700">最小／無風險</tspan>：不規範</text></svg>`+
+tb(["等級","管制","例子"],[["不可接受","禁止","社會信用評分、心理操控、職場學校情緒識別"],["高風險","強制偏見測試、人工監督、CE 認證","招募、醫療"],["有限風險","標示揭露","聊天機器人、Deepfake、生成式內容"],["最小／無風險","鼓勵自願守則","垃圾郵件過濾、電玩 NPC、推薦演算法"]])+`<p class="fl">罰則：不可接受風險最高 €3,500 萬或全球營收 7%；高風險 €1,500 萬或 3%。</p>`,
+c:["<b>有限風險</b>＝透明義務（要標示），<b>高風險</b>＝嚴格監管（要測試、認證），別對調。","情緒識別在「職場、學校」屬不可接受風險，不是高風險。","台灣《人工智慧基本法》風險分 2 類（高風險、禁止）；歐盟分 4 級。"]},
+
+{l:"L112",cat:"資料型態",t:"結構化、半結構化、非結構化資料",ex:1,
+s:"唯一判準：有沒有被強制執行的 Schema（schema-on-write）。",
+b:tb(["類型","特徵","常見格式／例子"],[["結構化","固定行列、Schema 嚴格","SQL 資料表、ERP 交易、數字（統計與時間序列）"],["半結構化","有標籤但格式彈性","JSON、XML、CSV、Log 檔"],["非結構化","無預設結構","文字（NLP）、影像（CV）、語音、影片、電子郵件"]])+`<p class="fl">多模態資料：同一資料集同時含文字、影像、語音、影片等多種型態。</p>`,
+c:["<b>CSV 屬半結構化</b>，不是結構化（常被誤判）。","「結構化預測」（如 NER 逐詞標註）指輸出有結構，與結構化資料無關。","Variety 的重點是資料「結構型態不同」，不只是來源多；解法為資料湖與 ETL。"]},
+
+{l:"L112",cat:"資料處理流程",t:"ETL vs ELT 流程對照",ex:1,
+s:"差別只在「轉換」發生在載入之前或之後；Transform 最費時也最關鍵。",
+b:`<p class="fl">ETL</p>`+flow(["抽取 Extract","轉換 Transform","載入 Load"])+`<p class="fl">ELT</p>`+flow(["抽取 Extract","載入 Load","轉換 Transform"])+tb(["","ETL","ELT"],[["順序","先轉換再載入","先載入再轉換"],["搭配","結構化、先定 Schema 的倉儲","資料湖（原始資料為主，Schema-on-Read），多用於 ML 工程"]]),
+c:["兩者都是三個字母，<b>順序</b>才是考點：看 T 和 L 誰先。","資料湖（Schema-on-Read）採 ELT；結構化資料表（Schema-on-Write）採 ETL。","資料生命週期六階段：收集、儲存、處理、分析、應用、銷毀，「銷毀」最常被忽略。"]},
+
+{l:"L112",cat:"資料清理",t:"四分位距法（IQR）離群值判斷",ex:1,
+s:"IQR = Q3 − Q1；超出 Q1 − 1.5×IQR 或 Q3 + 1.5×IQR 即視為離群值。",
+b:`<svg viewBox="0 0 460 115" role="img" aria-label="箱型圖與離群值"><line x1="45" y1="50" x2="385" y2="50" stroke="var(--sub)"/><line x1="45" y1="38" x2="45" y2="62" stroke="var(--sub)"/><line x1="385" y1="38" x2="385" y2="62" stroke="var(--sub)"/><rect x="150" y="30" width="120" height="40" fill="var(--acbg)" stroke="var(--ac)" stroke-width="2"/><line x1="210" y1="30" x2="210" y2="70" stroke="var(--ac)" stroke-width="3"/><circle cx="14" cy="50" r="5" fill="#dc2626"/><circle cx="430" cy="50" r="5" fill="#dc2626"/><text x="150" y="22" text-anchor="middle">Q1 (25%)</text><text x="210" y="88" text-anchor="middle">中位數</text><text x="270" y="22" text-anchor="middle">Q3 (75%)</text><path d="M150 96H270" stroke="var(--ac)"/><text x="210" y="110" text-anchor="middle">IQR</text><text x="14" y="76" text-anchor="middle" font-size="11">離群</text><text x="430" y="76" text-anchor="middle" font-size="11">離群</text></svg>`,
+c:["<b>Z-Score</b>假定常態分布且本身受極端值影響；<b>IQR 與箱型圖</b>抗極端值、不限分布。","倍數是 <b>1.5</b>，不是 3 或 2。","偏態資料的集中趨勢首選中位數；平均數 > 中位數為右偏（正偏）。"]},
+
+{l:"L113",cat:"學習方式",t:"監督式、非監督式、強化學習",ex:1,
+s:"差別在資料有沒有標籤，以及學習訊號從哪來。",
+b:tb(["類型","資料","主要任務／學習訊號"],[["監督式","有標籤","分類（離散類別）、迴歸（連續數值）"],["非監督式","無標籤","分群、降維、異常偵測"],["半監督式","少量標籤＋大量無標籤","補足標註不足"],["強化學習","環境互動","靠獎勵（Reward）做序列決策、學策略"]])+`<p class="fl">分類例：垃圾郵件、醫療診斷。迴歸例：房價、銷售額、溫度預測。</p>`,
+c:["<b>分類</b>輸出離散類別；<b>迴歸</b>輸出連續數值（看輸出型態，不看名稱）。","<b>半監督</b>仍有部分標籤，不是非監督。","分群（無標籤，自動分組）≠ 分類（有標籤，歸入既有類別）。"]},
+
+{l:"L113",cat:"模型表現",t:"欠擬合 vs 過擬合",ex:1,
+s:"比較訓練表現與測試表現：兩者都差是欠擬合；訓練很好、測試很差是過擬合。",
+b:`<svg viewBox="0 0 480 135" role="img" aria-label="欠擬合、適當、過擬合"><g id="pts"></g>`+
+[0,1,2].map(i=>`<g transform="translate(${i*160},0)"><rect x="2" y="2" width="150" height="105" fill="none" stroke="var(--line)"/>`+[[20,80],[50,52],[80,38],[110,52],[140,82]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--sub)"/>`).join('')+
+['<path d="M8 60H146" stroke="#dc2626" stroke-width="2" fill="none"/>','<path d="M10 92Q80 -2 148 92" stroke="#16a34a" stroke-width="2" fill="none"/>','<path d="M10 100L20 80L33 98L50 52L65 70L80 38L95 66L110 52L125 95L140 82" stroke="#ea580c" stroke-width="2" fill="none"/>'][i]+
+`<text x="77" y="127" text-anchor="middle">${["欠擬合","適當","過擬合"][i]}</text></g>`).join('')+`</svg>`+
+tb(["","訓練表現","測試表現","對策"],[["欠擬合","差","差","加複雜度、增加特徵、訓練更久"],["過擬合","非常好","很差","正則化、資料擴增、交叉驗證、Dropout"]]),
+c:["過擬合＝模型把訓練<b>雜訊</b>也背起來；欠擬合＝模型太簡單。","正則化、Dropout、資料擴增是針對<b>過擬合</b>的對策。","模式崩潰（生成結果多樣性塌陷）、幻覺（憑空捏造）、梯度消失，都不是過擬合。"]},
+
+{l:"L114",cat:"兩大派典",t:"鑑別式 AI vs 生成式 AI",ex:1,
+s:"鑑別式學條件機率 P(y|x) 畫邊界；生成式學分布，能從中抽樣產生新內容。",
+b:tb(["比較","鑑別式 AI（DAI）","生成式 AI（GAI）"],[["機率","P(y|x)","P(x, y) 或 P(x)"],["核心問題","給 x，判斷 y 是什麼","學會 x 的分布，產生新 x"],["輸出","類別標籤或數值預測","新樣本（文／圖／聲／影）"],["代表任務","分類、辨識、預測、迴歸","文本生成、圖像合成、對話"],["代表模型","Logistic Regression、SVM、決策樹、CNN、BERT","GAN、VAE、Diffusion、GPT"],["題目關鍵字","判斷／分類／預測／識別","生成／創作／合成／創造"]]),
+c:["<b>BERT</b>（雙向編碼器，文字理解）是鑑別式，不是生成式。","<b>CLIP</b> 只有影像與文字編碼器、沒有解碼器，做相似度比對，不是生成。","能不能「無中生有」產出新樣本，是判別生成式與否的關鍵。"]},
+
+{l:"L114",cat:"生成模型",t:"四大生成模型家族",ex:1,
+s:"各家族的優缺點是常考對比：看到缺點關鍵字就能反推模型。",
+b:tb(["模型","原理","優點","缺點"],[["GAN","生成器＋鑑別器對抗訓練","圖像逼真","訓練不穩、易模式崩潰"],["VAE","Encoder 壓成潛在分布，Decoder 採樣重建","訓練穩定","圖像偏模糊"],["Diffusion","前向加雜訊、反向學去雜訊","解析度與品質最佳","推理慢、運算量大"],["Autoregressive","逐 Token 預測下一個 Token","適合序列生成","序列長則速度受限"]]),
+c:["<b>模式崩潰</b>屬 GAN；<b>模糊</b>屬 VAE；<b>推理慢</b>屬 Diffusion。","AE 壓成「點」只能重建；VAE 壓成「機率分布」才能抽樣生成。","初代 DALL·E 為自迴歸 Transformer；DALL·E 2 起改採 Diffusion。","Transformer 與 VAE 都有 Encoder/Decoder；GAN 則是 Generator/Discriminator。"]}
+];
+const AUTO=[{"l": "L111", "t": "弱人工智慧（Narrow AI / Weak AI / ANI）", "ex": 1, "s": "專精於單一特定任務且無自我意識，當前商業應用皆屬此類。", "b": "", "c": [], "r": 0}, {"l": "L111", "t": "強人工智慧（AGI / General AI / Strong AI）", "ex": 1, "s": "擁有與人類相當之通用心智可跨領域學習，現仍未實現。", "b": "", "c": []}, {"l": "L111", "t": "超人工智慧（ASI / Super AI）", "ex": 1, "s": "在所有層面全面超越人類智慧，當前僅存在於科幻概念。", "b": "", "c": []}, {"l": "L111", "t": "圖靈測試（Turing Test）要點", "ex": 1, "s": "別名模仿遊戲，評估機器外顯行為是否與人類無法區分，不評估內部意識。", "b": "", "c": [], "r": 1}, {"l": "L111", "t": "能力範疇三階判準", "ex": 1, "s": "", "b": "", "c": ["判準為單一系統能不能跨到沒訓練過的任務，與產品數量無關。"]}, {"l": "L111", "t": "AI 應用領域判準", "ex": 1, "s": "", "b": "", "c": ["判準為輸入資料的模態而非產業別（影像為 CV、文字為 NLP）。"]}, {"l": "L111", "t": "歐盟 AI 法案—高風險", "ex": 1, "s": "嚴格監管（強制偏見測試、人工監督、CE 認證），含招募、醫療等。", "b": "", "c": [], "r": 2}, {"l": "L111", "t": "歐盟 AI 法案—有限風險", "ex": 1, "s": "課予透明義務，聊天機器人、Deepfake 及生成式內容須標示揭露。", "b": "", "c": []}, {"l": "L111", "t": "FAT 原則：可信賴 AI 的學界共識", "ex": 1, "s": "公平性（Fairness）、問責（Accountability）、透明度（Transparency）。", "b": "", "c": []}, {"l": "L111", "t": "台灣《人工智慧基本法》7 大原則", "ex": 1, "s": "2025/12/23 三讀、2026/01/14 施行，第 4 條訂 7 大原則。", "b": "", "c": []}, {"l": "L111", "t": "數發部 AI 三大指引", "ex": 1, "s": "人機協作（人類自主/問責）、透明可解釋（透明/可解釋）、個資保護（去識別化）。", "b": "", "c": []}, {"l": "L111", "t": "代理變數（Proxy Variable）", "ex": 1, "s": "看似中立、實際隱含敏感資訊的欄位（如郵遞區號），易造成隱性歧視。", "b": "", "c": []}, {"l": "L111", "t": "AIEC 可信賴 AI 五大護欄", "ex": 1, "s": "數發部 2023 年底成立 AIEC，五大護欄為準確性、可靠性、公平性、隱私、資安。", "b": "", "c": []}, {"l": "L111", "t": "負責任 AI（Responsible AI, RAI）四大基石", "ex": 1, "s": "公平性與無偏見、透明性與可解釋性、安全性與穩健性、責任與治理。", "b": "", "c": []}, {"l": "L111", "t": "XAI（Explainable AI, 可解釋 AI）與工具 (LIME / SHAP)", "ex": 1, "s": "實現透明性技術，將黑箱決策翻譯為人類可理解依據（LIME/SHAP）。", "b": "", "c": []}, {"l": "L111", "t": "人機協作治理模式：HITL / HOTL / HOoTL", "ex": 1, "s": "依 AI 自主性與人類介入時機分為人類監督、HITL、HOTL/HOoTL 與迴圈外。", "b": "", "c": []}, {"l": "L111", "t": "公平性三大量測指標", "ex": 1, "s": "族群均等（核准率相近）、機會均等（召回率/真陽率相近）、勝算均等（真陽與偽陽率皆相近）。", "b": "", "c": []}, {"l": "L111", "t": "透明性 (What) vs 可解釋性 (Why) 區分", "ex": 1, "s": "", "b": "", "c": ["透明性指讓人知道 AI 做了什麼（What）；可解釋性指讓人知道 AI 為什麼這麼做（Why）。"]}, {"l": "L112", "t": "結構化資料（Structured Data）", "ex": 1, "s": "固定行列、Schema 嚴格，如銷售紀錄與 ERP 交易表。", "b": "", "c": ["結構化資料判準：唯一判準是有沒有被強制執行的 Schema（schema-on-write）。"], "r": 3}, {"l": "L112", "t": "半結構化資料（Semi-structured Data）", "ex": 1, "s": "有標籤但格式彈性，如 JSON、XML、CSV、Log 檔。", "b": "", "c": []}, {"l": "L112", "t": "非結構化資料（Unstructured Data）", "ex": 1, "s": "無預設結構，如文字、影像、語音、影片、電子郵件。", "b": "", "c": []}, {"l": "L112", "t": "大數據 5V—規模（Volume）", "ex": 1, "s": "資料量達 TB/PB/EB 級，對應分散式儲存（HDFS、物件儲存）。", "b": "", "c": []}, {"l": "L112", "t": "大數據 5V—速度（Velocity）", "ex": 1, "s": "產生與處理速度快、即時性高，對應串流處理（Kafka、Spark）。", "b": "", "c": []}, {"l": "L112", "t": "大數據 5V—多樣（Variety）", "ex": 1, "s": "來源多元、結構不一，對應多模態整合與 NoSQL。", "b": "", "c": []}, {"l": "L112", "t": "SQL vs NoSQL—結構", "ex": 1, "s": "SQL 為嚴格 Schema、行列表格；NoSQL 為彈性 Schema。", "b": "", "c": []}, {"l": "L112", "t": "資料湖 Data Lake", "ex": 1, "s": "原始資料為主，Schema-on-Read，多採 ELT，用於 ML 工程。", "b": "", "c": []}, {"l": "L112", "t": "結構化資料判準", "ex": 1, "s": "唯一判準是有沒有被強制執行的 Schema（schema-on-write）。", "b": "", "c": []}, {"l": "L112", "t": "資料生命週期 (Data Lifecycle)", "ex": 1, "s": "包含收集、儲存、處理、分析、應用、銷毀六階段，銷毀最常被忽略。", "b": "", "c": []}, {"l": "L112", "t": "ETL vs ELT 流程對照", "ex": 1, "s": "ETL 為抽取→轉換→載入；ELT 為抽取→載入→轉換；Transform 最費時最關鍵。", "b": "", "c": [], "r": 4}, {"l": "L112", "t": "四分位距法 (IQR) 離群值公式", "ex": 1, "s": "Q1 為 25%、Q3 為 75%、IQR = Q3 − Q1；界線為 &lt; Q1 − 1.5×IQR 或 &gt; Q3 + 1.5×IQR。", "b": "", "c": [], "r": 5}, {"l": "L112", "t": "異常值處理對照 (Z-Score vs IQR vs 箱型圖)", "ex": 1, "s": "", "b": "", "c": ["Z-Score 假定常態且受極端值影響；IQR 法與箱型圖抗極端值且不限分布。"]}, {"l": "L112", "t": "集中趨勢三指標 (平均數、中位數、眾數)", "ex": 1, "s": "平均數易受極端值影響；中位數與眾數不受影響，偏態資料首選中位數。", "b": "", "c": []}, {"l": "L112", "t": "相關性係數 (皮爾森 vs 斯皮爾曼 vs 肯德爾)", "ex": 1, "s": "", "b": "", "c": ["皮爾森 r 算線性；斯皮爾曼 ρ 與肯德爾 τ 算等級相關；相關不等於因果。"]}, {"l": "L112", "t": "資料探勘四大方法", "ex": 1, "s": "包含分類（監督式）、分群（非監督式）、關聯規則與異常偵測四大任務。", "b": "", "c": []}, {"l": "L112", "t": "特徵工程五大子任務", "ex": 1, "s": "包含特徵選擇、特徵提取、特徵相關性分析、特徵縮放與特徵編碼。", "b": "", "c": []}, {"l": "L112", "t": "ML 流程順序", "ex": 1, "s": "資料蒐集→清洗→切分→特徵工程→訓練→評估→部署，務必先切分再做特徵工程。", "b": "", "c": []}, {"l": "L112", "t": "類別變數編碼四法對比表", "ex": 1, "s": "", "b": "", "c": ["有序用 Label，無序低基數用 One-Hot，高基數用 Binary 或 Target。"]}, {"l": "L112", "t": "常用數據縮放法 + 適用場景", "ex": 1, "s": "Min-Max 壓到 0-1 區間，Z-score 轉為均值 0 標準差 1。", "b": "", "c": []}, {"l": "L112", "t": "偏態方向判別口訣", "ex": 1, "s": "", "b": "", "c": ["平均數 &gt; 中位數為右偏（正偏）；平均數 &lt; 中位數為左偏（負偏）。"]}, {"l": "L112", "t": "SMOTE (Synthetic Minority Over-sampling Technique)", "ex": 1, "s": "在少數類特徵空間內插合成新樣本，非單純複製，解決類別不平衡。", "b": "", "c": []}, {"l": "L112", "t": "資料洩漏（Data Leakage）防範原則", "ex": 1, "s": "訓練時不可使用預測當下拿不到的未來資訊或測試集統計量。", "b": "", "c": []}, {"l": "L112", "t": "去識別化技術—假名化", "ex": 1, "s": "識別欄位換代號並保留對照表，可還原，保護強度中。", "b": "", "c": []}, {"l": "L112", "t": "去識別化技術—差分隱私", "ex": 1, "s": "在統計查詢或資料加入受控雜訊，不可逆，保護強度高。", "b": "", "c": []}, {"l": "L112", "t": "去識別化技術—K-匿名", "ex": 1, "s": "泛化準識別欄位，確保每筆至少與 K-1 筆無法區分，不可逆。", "b": "", "c": []}, {"l": "L113", "t": "監督式學習（Supervised Learning）", "ex": 1, "s": "資料有標籤（Labeled），主要任務為分類與迴歸。", "b": "", "c": [], "r": 6}, {"l": "L113", "t": "非監督式學習（Unsupervised Learning）", "ex": 1, "s": "資料無標籤（Unlabeled），主要任務為分群、降維、異常偵測。", "b": "", "c": []}, {"l": "L113", "t": "強化學習（Reinforcement Learning）", "ex": 1, "s": "靠環境互動回饋（Reward），做序列決策與策略學習。", "b": "", "c": []}, {"l": "L113", "t": "半監督式學習（Semi-Supervised Learning）", "ex": 1, "s": "少量標籤加上大量無標籤，用以補足標註不足。", "b": "", "c": []}, {"l": "L113", "t": "分類（Classification）", "ex": 1, "s": "輸出為離散類別，如醫療診斷、垃圾郵件與影像分類。", "b": "", "c": []}, {"l": "L113", "t": "迴歸（Regression）", "ex": 1, "s": "輸出為連續數值，如房價預測、銷售額預估與溫度預測。", "b": "", "c": []}, {"l": "L113", "t": "欠擬合（Underfitting）", "ex": 1, "s": "訓練表現差且測試表現差，成因模型太簡單、特徵或訓練不足。", "b": "", "c": [], "r": 7}, {"l": "L113", "t": "過擬合（Overfitting）", "ex": 1, "s": "訓練表現非常好但測試表現很差，成因模型背起訓練雜訊。", "b": "", "c": []}, {"l": "L113", "t": "偏差-變異權衡（Bias-Variance Tradeoff）", "ex": 1, "s": "高偏差對應欠擬合，高變異對應過擬合，須在兩者間找平衡。", "b": "", "c": []}, {"l": "L113", "t": "k 折交叉驗證（k-Fold Cross-Validation）", "ex": 1, "s": "資料均分 k 份，輪流取 1 份當測試、k-1 份當訓練，結果取平均。", "b": "", "c": []}, {"l": "L113", "t": "正則化—L1 正則化（Lasso）", "ex": 1, "s": "懲罰項為權重絕對值之和 Σ|w|，壓縮至 0 產生稀疏解做特徵選擇。", "b": "", "c": []}, {"l": "L113", "t": "正則化—L2 正則化（Ridge）", "ex": 1, "s": "懲罰項為權重平方之和 Σw²，縮小所有權重不歸零產生平滑解。", "b": "", "c": []}, {"l": "L113", "t": "正則化—Dropout", "ex": 1, "s": "訓練時隨機關閉神經元，強迫網路學習冗餘特徵以提升泛化。", "b": "", "c": []}, {"l": "L113", "t": "混淆矩陣（Confusion Matrix）", "ex": 1, "s": "分類指標基礎，含 TP（真陽）、FP（偽陽/誤報）、FN（偽陰/漏報）、TN（真陰）。", "b": "", "c": []}, {"l": "L113", "t": "分類指標—精確率（Precision）", "ex": 1, "s": "TP / (TP + FP)，喊抓到的裡面有多少真是正例，避免誤報。", "b": "", "c": []}, {"l": "L113", "t": "分類指標—召回率（Recall）", "ex": 1, "s": "TP / (TP + FN)，所有真正例中有多少被抓到，避免漏報。", "b": "", "c": []}, {"l": "L113", "t": "分類指標—F1 分數（F1 Score）", "ex": 1, "s": "2 × (Precision × Recall) / (Precision + Recall)，調和平均。", "b": "", "c": []}, {"l": "L113", "t": "資料漂移（Data Drift）", "ex": 1, "s": "訓練資料分佈與部署後實際輸入資料的統計特徵隨時間出現差異（P(X)變）。", "b": "", "c": []}, {"l": "L113", "t": "概念漂移（Concept Drift）", "ex": 1, "s": "輸入特徵分布相近，但特徵與標籤對應關係或規則改變（P(Y|X)變）。", "b": "", "c": []}, {"l": "L113", "t": "XAI 工具—SHAP", "ex": 1, "s": "基於賽局論 Shapley value，計算每個特徵對單一預測貢獻。", "b": "", "c": []}, {"l": "L113", "t": "XAI 工具—LIME", "ex": 1, "s": "在預測點附近用簡單模型（線性迴歸）局部近似。", "b": "", "c": []}, {"l": "L113", "t": "四類學習判別開關", "ex": 1, "s": "", "b": "", "c": ["有標註走監督式、無標註走非監督式、少標註加多未標註走半監督式、靠獎勵試錯走強化式。"]}, {"l": "L113", "t": "探索與利用權衡（Exploration vs Exploitation）", "ex": 1, "s": "", "b": "", "c": ["選擇已知最佳拿穩定回報（利用）與嘗試新選擇拿潛在更高回報（探索）之兩難。"]}, {"l": "L113", "t": "混淆矩陣指標判別口訣", "ex": 1, "s": "", "b": "", "c": ["怕漏看（漏報）看 Recall；怕錯殺（誤報）看 Precision；兩者兼顧看 F1。"]}, {"l": "L113", "t": "隨機森林（Random Forest, RF）", "ex": 1, "s": "多棵決策樹 Bootstrap 取樣 + 投票/平均（Bagging 集成）。", "b": "", "c": []}, {"l": "L113", "t": "集成學習—Bagging（Bootstrap Aggregating）", "ex": 1, "s": "並行訓練多模型，Bootstrap 重抽樣+投票/平均，降低變異。", "b": "", "c": ["Bagging vs Boosting 對照表：Bagging 並行/降變異/等權；Boosting 序列/降偏差/錯分加權易過擬合。"]}, {"l": "L113", "t": "Bagging vs Boosting 對照表", "ex": 1, "s": "Bagging 並行/降變異/等權；Boosting 序列/降偏差/錯分加權易過擬合。", "b": "", "c": []}, {"l": "L113", "t": "CNN vs RNN 對照表", "ex": 1, "s": "空間影像（卷積+池化） vs 時間序列/文本（循環隱藏狀態）。", "b": "", "c": []}, {"l": "L114", "t": "鑑別式 AI（Discriminative AI, DAI）", "ex": 1, "s": "學條件機率 P(y|x)，在資料空間畫決策邊界切開類別。", "b": "", "c": ["鑑別式 vs 生成式解題關鍵字：判斷/分類/預測/識別為鑑別式；生成/創作/合成/改寫為生成式。", "鑑別式 vs 生成式模型輸出型態決策鐵則：輸出為標籤/分數/機率/類別為鑑別式；輸出為新內容為生成式。"], "r": 8}, {"l": "L114", "t": "生成式 AI（Generative AI, GAI）", "ex": 1, "s": "學聯合機率 P(x, y) 或邊際機率 P(x)，從分布抽樣生成新內容。", "b": "", "c": []}, {"l": "L114", "t": "派典核心對照—解題關鍵字", "ex": 1, "s": "DAI 關鍵字為判斷/分類/預測/識別；GAI 關鍵字為生成/創作/合成/創造。", "b": "", "c": []}, {"l": "L114", "t": "四大生成模型家族—GAN", "ex": 1, "s": "生成器 + 鑑別器對抗訓練，生成圖像逼真，但訓練不穩且易模式崩潰。", "b": "", "c": [], "r": 9}, {"l": "L114", "t": "四大生成模型家族—VAE", "ex": 1, "s": "Encoder 壓至潛在分布，Decoder 採樣重建，訓練穩定但圖像偏模糊。", "b": "", "c": []}, {"l": "L114", "t": "四大生成模型家族—Diffusion Model", "ex": 1, "s": "前向加雜訊、反向學去雜訊，解析度與品質最佳，但推理慢運算量大。", "b": "", "c": []}, {"l": "L114", "t": "四大生成模型家族—Autoregressive Model", "ex": 1, "s": "逐 Token 預測下一個 Token，適合序列生成，序列長則速度受限。", "b": "", "c": []}, {"l": "L114", "t": "具體鑑別式模型—BERT", "ex": 1, "s": "雙向 Transformer 編碼器，用於文字理解與情感分析（Google 2018）。", "b": "", "c": []}, {"l": "L114", "t": "自編碼器（AE）vs 變分自編碼器（VAE）", "ex": 1, "s": "", "b": "", "c": ["AE 壓成點只能重建；VAE 壓成機率分布可抽樣生成。"]}, {"l": "L114", "t": "迷失在中間（Lost in the Middle）", "ex": 1, "s": "上下文很長未超上限，引用開頭與結尾而忽略中段。", "b": "", "c": []}, {"l": "L114", "t": "知識截止（Knowledge Cutoff）", "ex": 1, "s": "詢問訓練資料時間點之後的事，答不出或憑空捏造事實。", "b": "", "c": []}, {"l": "L114", "t": "模式崩潰（Mode Collapse）", "ex": 1, "s": "生成結果多樣性塌陷，反覆產生少數幾種相似樣板內容。", "b": "", "c": ["模式崩潰 vs 過擬合 vs 幻覺 vs 梯度消失：多樣性塌縮（模式崩潰）vs 訓練好測試差（過擬合）vs 憑空捏造（幻覺）。"]}, {"l": "L114", "t": "模式崩潰 vs 過擬合 vs 幻覺 vs 梯度消失", "ex": 1, "s": "多樣性塌縮（模式崩潰）vs 訓練好測試差（過擬合）vs 憑空捏造（幻覺）。", "b": "", "c": []}, {"l": "L114", "t": "CLIP 雙塔對比學習模型", "ex": 1, "s": "", "b": "", "c": ["只有影像與文字編碼器無解碼器，做相似度比對非生成。"]}, {"l": "L114", "t": "三大 Transformer 架構分工", "ex": 1, "s": "Encoder-only 理解分類；Decoder-only 自迴歸生成；Encoder-Decoder 翻譯。", "b": "", "c": []}, {"l": "L114", "t": "零樣本 vs 少樣本口訣", "ex": 1, "s": "", "b": "", "c": ["零樣本與少樣本只在提示詞裡動手腳不動權重，動權重的是微調。"]}, {"l": "L114", "t": "RLHF 核心作法與三階段", "ex": 1, "s": "(1) SFT 監督微調 → (2) 人類偏好排序建獎勵模型 → (3) PPO 強化學習。", "b": "", "c": []}, {"l": "L114", "t": "檢索增強生成（RAG）", "ex": 1, "s": "回答前先從外部知識庫檢索相關資料，再交由 LLM 生成答案。", "b": "", "c": ["RAG vs Fine-tuning—知識來源：RAG 來自外部向量資料庫；Fine-tuning 內化進模型權重。", "RAG vs Fine-tuning—知識更新：RAG 更新資料庫即可即時生效；Fine-tuning 需重新訓練。", "RAG vs Fine-tuning—適合的知識類型：RAG 適合事實、最新資訊；Fine-tuning 適合風格、語氣與格式。", "RAG vs Fine-tuning—訓練成本：RAG 無需訓練模型成本低；Fine-tuning 訓練與算力成本高。", "RAG vs Fine-tuning—可解釋性：RAG 可追溯到原始文件；Fine-tuning 權重屬黑盒子。", "RAG vs Fine-tuning—幻覺風險：RAG 具原文佐證幻覺風險低；Fine-tuning 仍存在幻覺風險。", "RAG vs Fine-tuning—典型應用：RAG 用於客服 FAQ、法規查詢；Fine-tuning 用於品牌口吻與特定 JSON 格式。"]}, {"l": "L114", "t": "RAG 四步驟流程", "ex": 1, "s": "1.提問(Query) → 2.檢索(Retrieve) → 3.增強(Augment) → 4.生成(Generate)。", "b": "", "c": []}, {"l": "L114", "t": "RAG vs Fine-tuning—知識來源", "ex": 1, "s": "RAG 來自外部向量資料庫；Fine-tuning 內化進模型權重。", "b": "", "c": []}, {"l": "L114", "t": "RAG vs Fine-tuning—知識更新", "ex": 1, "s": "RAG 更新資料庫即可即時生效；Fine-tuning 需重新訓練。", "b": "", "c": []}, {"l": "L114", "t": "AI Agent / Agentic AI 定義", "ex": 1, "s": "能自主接收目標、規劃步驟、使用工具執行任務並反思修正。", "b": "", "c": []}, {"l": "L114", "t": "LLM vs Agentic AI 對照表", "ex": 1, "s": "LLM 偏生成內容（只會說）；Agentic AI 偏規劃執行任務（真的會做）。", "b": "", "c": []}, {"l": "L114", "t": "MCP（Model Context Protocol）", "ex": 1, "s": "AI 模型與外部資料/工具溝通的標準協定，被稱為 AI 的 USB-C。", "b": "", "c": []}, {"l": "L114", "t": "MCP 三大角色職責分工", "ex": 1, "s": "AI Host 決策；MCP Client 唯一傳輸通道；MCP Server 連接後端資料與工具。", "b": "", "c": []}, {"l": "L114", "t": "A2A（Agent-to-Agent）", "ex": 1, "s": "代理人之間互通之協定，為多代理人系統（MAS）之基礎。", "b": "", "c": []}, {"l": "L114", "t": "人在迴圈內（HITL）", "ex": 1, "s": "人類主動介入處理邊緣案例與低信心個案，回饋資料閉環訓練。", "b": "", "c": []}, {"l": "L114", "t": "LLM 三大先天限制與 Tool Calling", "ex": 1, "s": "彌補知識截止日、高精度數值運算不可靠、無法對外界產生動作三大限制。", "b": "", "c": []}];
+const ITEMS=AUTO.map(x=>x.r!==undefined?Object.assign({},x,{b:RICH[x.r].b,c:RICH[x.r].c.concat(x.c)}):x);
+ITEMS.forEach(i=>i.hay=(i.t+i.s+i.l+LES[i.l]+i.cat+i.b.replace(/<[^>]+>/g,' ')+i.c.join('').replace(/<[^>]+>/g,'')).toLowerCase());
+
+let mode=0,lessons=new Set(Object.keys(LES));
+const $=id=>document.getElementById(id);
+const card=i=>`<article class="card"><header><label class="ck"><input type="checkbox"><span>${i.t}</span></label>${i.ex?'<span class="badge">有考古題</span>':''}</header><div class="tags"><span>${i.l}</span></div><p class="s">${i.s}</p>${i.b}${i.c.length?'<div class="conf"><h4>⚠ 易混淆考點</h4><ul>'+i.c.map(x=>'<li>'+x+'</li>').join('')+'</ul></div>':''}</article>`;
+
+function render(){
+  const q=$('q').value.trim().toLowerCase();
+  const list=ITEMS.filter(i=>lessons.has(i.l)&&(!q||q.split(/\s+/).every(w=>i.hay.includes(w))));
+  $('cnt').textContent='共 '+list.length+' 個考點';
+  let h='';
+  if(!list.length)h='<div class="empty">找不到符合的考點，請換個關鍵字或調整範圍。</div>';
+  else if(mode){
+    Object.keys(LES).forEach(k=>{const a=list.filter(i=>i.l===k);if(a.length)h+=`<h2>${k} ${LES[k]}<small>${a.length} 個</small></h2><div class="grid">${a.map(card).join('')}</div>`});
+  }else h=`<div class="grid">${list.map(card).join('')}</div>`;
+  $('main').innerHTML=h;
+}
+$('q').oninput=render;
+render();
+</script>
+</body>
+</html>
